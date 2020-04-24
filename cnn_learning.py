@@ -11,7 +11,8 @@ import numpy as np
 import os, glob
 import random, math
 
-#os.environ['KMP_DUPLICATE_LIB_OK']='TRUE'
+os.environ['KMP_DUPLICATE_LIB_OK']='TRUE'
+#%%
 
 root_dir = "class_test"
 categories = ["PS4","ぬいぐるみ", "イス"]
@@ -89,10 +90,12 @@ model.compile(loss="binary_crossentropy",
 
 #%%
 
+categories = ["PS4","ぬいぐるみ", "イス"]
+
 from keras.utils import np_utils
 nb_classes = len(categories)
 
-#X_train, X_test, y_train, y_test = np.load("test_data.npy", allow_pickle=True)
+X_train, X_test, y_train, y_test = np.load("test.npy", allow_pickle=True)
 
 #データの正規化
 X_train = X_train.astype("float") / 255
@@ -140,3 +143,15 @@ plt.title('Training and validation loss')
 plt.legend()
 plt.show()
 #plt.savefig('損失値を示すグラフのファイル名')
+#%%
+
+#モデルの保存
+
+json_string = model.model.to_json()
+open('./model_data/test_predict.json', 'w').write(json_string)
+
+#重みの保存
+
+hdf5_file = "./model_data/test_predict.hdf5"
+model.model.save_weights(hdf5_file)
+
