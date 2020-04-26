@@ -20,18 +20,18 @@ def draw_images(generator, x, dir_name, index):
     g = generator.flow(x, batch_size=1, save_to_dir=output_dir,
                        save_prefix=save_name, save_format='jpeg')
 
-    # 1つの入力画像から何枚拡張するかを指定（今回は50枚）
-    for i in range(50):
+    # 1つの入力画像から何枚拡張するかを指定（今回は10枚）
+    for i in range(5):
         bach = g.next()
 
 # 出力先ディレクトリの設定
-output_dir = "/Users/kimurayasuhisa/PyStudy/test/ext_pic/PS4"
+output_dir = "../test_data_pic/ext_pic/ぬいぐるみ"
 
 if not(os.path.exists(output_dir)):
     os.mkdir(output_dir)
 
 # 拡張する画像の読み込み
-images = glob.glob(os.path.join("/Users/kimurayasuhisa/PyStudy/recognize_obj/objects/pictures/PS4", "*"))
+images = glob.glob(os.path.join("../test_data_pic/ぬいぐるみ", "*"))
 
 # ImageDataGeneratorを定義
 datagen = ImageDataGenerator(rotation_range=30,
@@ -48,3 +48,6 @@ for i in range(len(images)):
     x = img_to_array(img)
     x = np.expand_dims(x, axis=0)
     draw_images(datagen, x, output_dir, i)
+    
+
+print("--- Clone complete ---")
